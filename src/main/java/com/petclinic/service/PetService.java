@@ -1,74 +1,58 @@
 package com.petclinic.service;
 
-import com.petclinic.model.Owner;
 import com.petclinic.model.Pet;
 import com.petclinic.repository.OwnerRepository;
 import com.petclinic.repository.PetRepository;
+import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PetService {
-
-    private static PetService instance;
 
     private final PetRepository petRepository;
     private final OwnerRepository ownerRepository;
 
-    private PetService() {
-        this.petRepository = PetRepository.getInstance();
-        this.ownerRepository = OwnerRepository.getInstance();
+    public PetService(PetRepository petRepository, OwnerRepository ownerRepository) {
+        this.petRepository = petRepository;
+        this.ownerRepository = ownerRepository;
     }
 
-    public static synchronized PetService getInstance() {
-        if (instance == null) {
-            instance = new PetService();
-        }
-        return instance;
+    public List<Pet> getAllPets() {
+        return petRepository.findAllByOrderById();
     }
 
-    public List<Pet> getAllPets() throws SQLException {
-        return petRepository.findAll();
+    public List<Pet> getPetsByOwner(long ownerId) {
+        return petRepository.findByOwnerIdOrderById(ownerId);
     }
 
-    public List<Pet> getPetsByOwner(long ownerId) throws SQLException {
-        if (false) {
-            // for the demo purposes
-            // never use this pattern
-            var owner = new Owner();
-            owner.setId(ownerId);
-            return owner.getPets();
-        }
-        return petRepository.findByOwnerId(ownerId);
-    }
-
-    public Optional<Pet> getPet(long id) throws SQLException {
+    public Optional<Pet> getPet(long id) {
         return petRepository.findById(id);
     }
 
-    public Pet createPet(Pet pet) throws SQLException {
+    public Pet createPet(Pet pet) {
         validate(pet);
-        if (ownerRepository.findById(pet.getOwnerId()).isEmpty()) {
+        if (!ownerRepository.existsById(pet.getOwnerId())) {
             throw new IllegalArgumentException("Owner with id " + pet.getOwnerId() + " not found");
         }
         return petRepository.save(pet);
     }
 
-    public Optional<Pet> updatePet(long id, Pet incoming) throws SQLException {
-        Optional<Pet> existing = petRepository.findById(id);
-        if (existing.isEmpty()) return Optional.empty();
+    public Optional<Pet> updatePet(long id, Pet incoming) {
+        if (!petRepository.existsById(id)) return Optional.empty();
         validate(incoming);
-        if (ownerRepository.findById(incoming.getOwnerId()).isEmpty()) {
+        if (!ownerRepository.existsById(incoming.getOwnerId())) {
             throw new IllegalArgumentException("Owner with id " + incoming.getOwnerId() + " not found");
         }
         incoming.setId(id);
-        petRepository.update(incoming);
-        return Optional.of(incoming);
+        return Optional.of(petRepository.save(incoming));
     }
 
-    public boolean deletePet(long id) throws SQLException {
-        return petRepository.delete(id);
+    public boolean deletePet(long id) {
+        if (!petRepository.existsById(id)) return false;
+        petRepository.deleteById(id);
+        return true;
     }
 
     private void validate(Pet p) {

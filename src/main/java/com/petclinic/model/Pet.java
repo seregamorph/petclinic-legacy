@@ -1,12 +1,25 @@
 package com.petclinic.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "pets")
 public class Pet {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
+    @Column(name = "birth_date")
     private LocalDate birthDate;
+
     private String type;
+
+    @Column(name = "owner_id")
     private Long ownerId;
 
     public Pet() {}
