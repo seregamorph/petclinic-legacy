@@ -7,6 +7,9 @@
 
     <display-name>PetClinic</display-name>
 
+    <listener>
+        <listener-class>com.petclinic.spring.SpringContextListener</listener-class>
+    </listener>
     <!-- Startup listener: runs Flyway migrations, initializes singletons -->
     <listener>
         <listener-class>com.petclinic.listener.AppContextListener</listener-class>
