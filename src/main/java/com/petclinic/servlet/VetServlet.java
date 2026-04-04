@@ -4,6 +4,7 @@ import com.petclinic.model.Vet;
 import com.petclinic.service.VetService;
 import com.petclinic.util.JsonUtil;
 
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.util.Optional;
 /**
  * Handles /api/vets and /api/vets/{id}
  */
+@WebServlet(urlPatterns = {"/api/vets/*"})
 public class VetServlet extends HttpServlet {
 
     private final VetService vetService = VetService.getInstance();

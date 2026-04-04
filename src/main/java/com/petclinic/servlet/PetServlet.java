@@ -4,6 +4,7 @@ import com.petclinic.model.Pet;
 import com.petclinic.service.PetService;
 import com.petclinic.util.JsonUtil;
 
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import java.util.Optional;
  * Handles /api/pets and /api/pets/{id}
  * Optional query param: ?ownerId=N to filter by owner
  */
+@WebServlet(urlPatterns = {"/api/pets/*"})
 public class PetServlet extends HttpServlet {
 
     private final PetService petService = PetService.getInstance();

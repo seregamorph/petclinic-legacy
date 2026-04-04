@@ -14,41 +14,4 @@
     <listener>
         <listener-class>com.petclinic.listener.AppContextListener</listener-class>
     </listener>
-
-    <!-- Servlets -->
-    <servlet>
-        <servlet-name>OwnerServlet</servlet-name>
-        <servlet-class>com.petclinic.servlet.OwnerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PetServlet</servlet-name>
-        <servlet-class>com.petclinic.servlet.PetServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VetServlet</servlet-name>
-        <servlet-class>com.petclinic.servlet.VetServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VisitServlet</servlet-name>
-        <servlet-class>com.petclinic.servlet.VisitServlet</servlet-class>
-    </servlet>
-
-    <!-- Servlet Mappings -->
-    <servlet-mapping>
-        <servlet-name>OwnerServlet</servlet-name>
-        <url-pattern>/api/owners/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PetServlet</servlet-name>
-        <url-pattern>/api/pets/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VetServlet</servlet-name>
-        <url-pattern>/api/vets/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VisitServlet</servlet-name>
-        <url-pattern>/api/visits/*</url-pattern>
-    </servlet-mapping>
-
 </web-app>
