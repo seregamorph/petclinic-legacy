@@ -1,3 +1,11 @@
+
+## Demo project of migration from the legacy web application to Spring Boot
+See [presentation slides](https://miro.com/app/board/uXjVG7ZzHdE=/)
+
+See migrations:
+* step-by-step https://github.com/seregamorph/petclinic-legacy/pull/2
+* in one go with AI https://github.com/seregamorph/petclinic-legacy/pull/1
+
 REST API
 
 ```
