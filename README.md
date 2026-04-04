@@ -34,6 +34,12 @@ docker compose up -d
 cp target/petclinic.war $CATALINA_HOME/webapps/
 ```
 
+### Run e2e tests
+(requires started docker compose)
+```shell
+mvn clean verify
+```
+
 ### Test
 curl http://localhost:8080/petclinic/api/owners
 curl http://localhost:8080/petclinic/api/vets

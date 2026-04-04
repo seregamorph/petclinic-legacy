@@ -1,5 +1,10 @@
 package com.petclinic.model;
 
+import com.petclinic.repository.PetRepository;
+
+import java.sql.SQLException;
+import java.util.List;
+
 public class Owner {
     private Long id;
     private String firstName;
@@ -8,7 +13,9 @@ public class Owner {
     private String city;
     private String telephone;
 
-    public Owner() {}
+    public List<Pet> getPets() throws SQLException {
+        return PetRepository.getInstance().findByOwnerId(getId());
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

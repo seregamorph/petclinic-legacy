@@ -1,5 +1,6 @@
 package com.petclinic.service;
 
+import com.petclinic.model.Owner;
 import com.petclinic.model.Pet;
 import com.petclinic.repository.OwnerRepository;
 import com.petclinic.repository.PetRepository;
@@ -32,6 +33,13 @@ public class PetService {
     }
 
     public List<Pet> getPetsByOwner(long ownerId) throws SQLException {
+        if (false) {
+            // for the demo purposes
+            // never use this pattern
+            var owner = new Owner();
+            owner.setId(ownerId);
+            return owner.getPets();
+        }
         return petRepository.findByOwnerId(ownerId);
     }
 
