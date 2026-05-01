@@ -1,6 +1,6 @@
 
 ## Demo project of migration from the legacy web application to Spring Boot
-See [presentation slides](https://miro.com/app/board/uXjVG7ZzHdE=/)
+See [Spring I/O recording](https://www.youtube.com/watch?v=MV--k_cySTE) and [presentation slides](https://miro.com/app/board/uXjVG7ZzHdE=/)
 
 See migrations:
 * step-by-step https://github.com/seregamorph/petclinic-legacy/pull/2
