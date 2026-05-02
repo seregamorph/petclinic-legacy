@@ -39,13 +39,7 @@ docker compose up -d
 
 ### deploy to Tomcat 10+
 ```shell
-cp target/petclinic.war $CATALINA_HOME/webapps/
-```
-
-### Run e2e tests
-(requires started docker compose)
-```shell
-mvn clean verify
+java -jar target/petclinic.jar --server.servlet.context-path=/petclinic
 ```
 
 ### Test
