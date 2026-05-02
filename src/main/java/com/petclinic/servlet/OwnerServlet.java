@@ -4,6 +4,7 @@ import com.petclinic.model.Owner;
 import com.petclinic.service.OwnerService;
 import com.petclinic.util.JsonUtil;
 
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.util.Optional;
 /**
  * Handles /api/owners and /api/owners/{id}
  */
+@WebServlet(urlPatterns = {"/api/owners/*"})
 public class OwnerServlet extends HttpServlet {
 
     private final OwnerService ownerService = OwnerService.getInstance();

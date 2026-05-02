@@ -2,29 +2,33 @@ package com.petclinic.repository;
 
 import com.petclinic.config.DatabaseConfig;
 import com.petclinic.model.Owner;
+import com.petclinic.spring.ApplicationContextHolder;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class OwnerRepository {
 
-    private static OwnerRepository instance;
+    private final DatabaseConfig databaseConfig;
 
-    private OwnerRepository() {}
+    public OwnerRepository(DatabaseConfig databaseConfig) {
+        this.databaseConfig = databaseConfig;
+    }
 
-    public static synchronized OwnerRepository getInstance() {
-        if (instance == null) {
-            instance = new OwnerRepository();
-        }
-        return instance;
+    @Deprecated
+    public static OwnerRepository getInstance() {
+        return ApplicationContextHolder.getBean(OwnerRepository.class);
     }
 
     public List<Owner> findAll() throws SQLException {
         List<Owner> owners = new ArrayList<>();
         String sql = "SELECT id, first_name, last_name, address, city, telephone FROM owners ORDER BY id";
-        try (Connection conn = DatabaseConfig.getInstance().getConnection();
+        try (Connection conn = databaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -36,7 +40,7 @@ public class OwnerRepository {
 
     public Optional<Owner> findById(long id) throws SQLException {
         String sql = "SELECT id, first_name, last_name, address, city, telephone FROM owners WHERE id = ?";
-        try (Connection conn = DatabaseConfig.getInstance().getConnection();
+        try (Connection conn = databaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -49,7 +53,7 @@ public class OwnerRepository {
     public Owner save(Owner owner) throws SQLException {
         String sql = "INSERT INTO owners (first_name, last_name, address, city, telephone) " +
                      "VALUES (?, ?, ?, ?, ?) RETURNING id";
-        try (Connection conn = DatabaseConfig.getInstance().getConnection();
+        try (Connection conn = databaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, owner.getFirstName());
             ps.setString(2, owner.getLastName());
@@ -66,7 +70,7 @@ public class OwnerRepository {
 
     public boolean update(Owner owner) throws SQLException {
         String sql = "UPDATE owners SET first_name=?, last_name=?, address=?, city=?, telephone=? WHERE id=?";
-        try (Connection conn = DatabaseConfig.getInstance().getConnection();
+        try (Connection conn = databaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, owner.getFirstName());
             ps.setString(2, owner.getLastName());
@@ -80,7 +84,7 @@ public class OwnerRepository {
 
     public boolean delete(long id) throws SQLException {
         String sql = "DELETE FROM owners WHERE id = ?";
-        try (Connection conn = DatabaseConfig.getInstance().getConnection();
+        try (Connection conn = databaseConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, id);
             return ps.executeUpdate() > 0;

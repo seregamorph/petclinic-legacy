@@ -42,6 +42,11 @@ docker compose up -d
 cp target/petclinic.war $CATALINA_HOME/webapps/
 ```
 
+or
+```shell
+java -jar target/petclinic.war --server.servlet.context-path=/petclinic
+```
+
 ### Run e2e tests
 (requires started docker compose)
 ```shell
